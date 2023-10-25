@@ -14,10 +14,10 @@ def _get_connection() -> Driver:
 def findUserByName(name):
     data = _get_connection().execute_query("MATCH (a:User) where a.name = $name RETURN a;", name=name)
     if len(data[0]) > 0:
-        user = Costumer(name, data[0][0][0]['age'])
+        user = Customer(name, data[0][0][0]['age'])
         return user
     else:
-        return Costumer(name, "Not found in DB")
+        return Customer(name, "Not found in DB")
 
 class Customer:
     def __init__(self, name, age, address):
