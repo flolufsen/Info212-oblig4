@@ -264,4 +264,4 @@ def return_car(customer_id, car_id, return_status):
         nodes_json = [node_to_json(record["a"]) for record in result]
         return nodes_json
 
-#KJØR KODENE I POSTMAN OG OM ALT ER RIKTIG TRENGER VI BARE Å LAGE REPORT OG SETTE TING I GITHUB
+#KJØR KODENE I POSTMAN OG OM ALT ER RIKTIG TRENGER VI BARE Å LAGE REPORT
