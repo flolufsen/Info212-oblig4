@@ -4,7 +4,6 @@ import re
 URI = "neo4j+s://3d029092.databases.neo4j.io"
 AUTH = ("neo4j", "vjuQ1pzfXG4vLjo9NlJDtCLTHxhrJothEVGd3T0getM")
 
-
 def _get_connection() -> Driver:
     driver = GraphDatabase.driver(URI, auth=AUTH)
     driver.verify_connectivity()
