@@ -19,7 +19,7 @@ def findUserByName(name):
     else:
         return Costumer(name, "Not found in DB")
 
-class Costumer:
+class Customer:
     def __init__(self, name, age, address):
         self.name = name
         self.age = age
