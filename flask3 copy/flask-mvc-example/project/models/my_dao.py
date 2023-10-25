@@ -36,3 +36,42 @@ def save_car(make, model, reg, year, capacity):
 
 def delete_car(reg):
   _get_connection().execute_query("MATCH (a:Car{reg: $reg}) delete a;", reg = reg)
+
+
+
+
+
+
+#CHATGPT
+
+def create_customer(name, age, address):
+    with _get_connection().session() as session:
+        session.run("CREATE (:Customer {name: $name, age: $age, address: $address})", name=name, age=age, address=address)
+
+def get_customers():
+    with _get_connection().session() as session:
+        return [node_to_json(record["a"]) for record in session.run("MATCH (a:Customer) RETURN a")]
+
+def update_customer(customer_id, name, age, address):
+    with _get_connection().session() as session:
+        session.run("MATCH (a:Customer) WHERE id(a) = $id SET a.name = $name, a.age = $age, a.address = $address", id=customer_id, name=name, age=age, address=address)
+
+def delete_customer(customer_id):
+    with _get_connection().session() as session:
+        session.run("MATCH (a:Customer) WHERE id(a) = $id DELETE a", id=customer_id)
+
+def create_employee(name, address, branch):
+    with _get_connection().session() as session:
+        session.run("CREATE (:Employee {name: $name, address: $address, branch: $branch})", name=name, address=address, branch=branch)
+
+def get_employees():
+    with _get_connection().session() as session:
+        return [node_to_json(record["a"]) for record in session.run("MATCH (a:Employee) RETURN a")]
+
+def update_employee(employee_id, name, address, branch):
+    with _get_connection().session() as session:
+        session.run("MATCH (a:Employee) WHERE id(a) = $id SET a.name = $name, a.address = $address, a.branch = $branch", id=employee_id, name=name, address=address, branch=branch)
+
+def delete_employee(employee_id):
+    with _get_connection().session() as session:
+        session.run("MATCH (a:Employee) WHERE id(a) = $id DELETE a", id=employee_id)
