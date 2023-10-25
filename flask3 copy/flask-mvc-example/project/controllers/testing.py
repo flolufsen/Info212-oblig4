@@ -50,56 +50,38 @@ def delete_car_info():
     return findAllCars()
 
 
-
-
 #CHAT GPT
 
-@app.route('/customer', methods=["POST"])
-def create_customer_endpoint():
-    name = request.form["name"]
-    age = request.form["age"]
-    address = request.form["address"]
-    create_customer(name, age, address)
-    return jsonify({"message": "Customer created!"})
+#Endpoint ordering a car
+@app.route('/order-car', methods=['POST'])
+def order_car():
+    data = request.json
+    customer_id = data['customer_id']
+    car_id = data['car_id']
 
-@app.route('/customer', methods=["GET"])
-def get_customers_endpoint():
-    return jsonify(get_customers())
+    # Check if the customer has not booked other cars.
+    booked_car = find_booked_car_for_customer(customer_id)
+    if booked_car:
+        return jsonify({"error": "Customer already has a booking!"}), 400
 
-@app.route('/customer/<customer_id>', methods=["PUT"])
-def update_customer_endpoint(customer_id):
-    name = request.form["name"]
-    age = request.form["age"]
-    address = request.form["address"]
-    update_customer(customer_id, name, age, address)
-    return jsonify({"message": "Customer updated!"})
+    # Change the status of the car to 'booked'
+    book_car_for_customer(customer_id, car_id)
+    return jsonify({"message": "Car booked successfully!"})
 
-@app.route('/customer/<customer_id>', methods=["DELETE"])
-def delete_customer_endpoint(customer_id):
-    delete_customer(customer_id)
-    return jsonify({"message": "Customer deleted!"})
+#Endpoint cancel order
+@app.route('/cancel-order-car', methods=['POST'])
+def cancel_order_car():
+    data = request.json
+    customer_id = data['customer_id']
+    car_id = data['car_id']
 
-@app.route('/employee', methods=["POST"])
-def create_employee_endpoint():
-    name = request.form["name"]
-    address = request.form["address"]
-    branch = request.form["branch"]
-    create_employee(name, address, branch)
-    return jsonify({"message": "Employee created!"})
+    # Check if the customer has booked the specific car.
+    booked_car = find_specific_booked_car_for_customer(customer_id, car_id)
+    if not booked_car:
+        return jsonify({"error": "No booking found for this customer and car!"}), 400
 
-@app.route('/employee', methods=["GET"])
-def get_employees_endpoint():
-    return jsonify(get_employees())
+    # Cancel the booking
+    cancel_booking_for_car_and_customer(customer_id, car_id)
+    return jsonify({"message": "Booking canceled successfully!"})
 
-@app.route('/employee/<employee_id>', methods=["PUT"])
-def update_employee_endpoint(employee_id):
-    name = request.form["name"]
-    address = request.form["address"]
-    branch = request.form["branch"]
-    update_employee(employee_id, name, address, branch)
-    return jsonify({"message": "Employee updated!"})
 
-@app.route('/employee/<employee_id>', methods=["DELETE"])
-def delete_employee_endpoint(employee_id):
-    delete_employee(employee_id)
-    return jsonify({"message": "Employee deleted!"})

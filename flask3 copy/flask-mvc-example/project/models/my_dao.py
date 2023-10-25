@@ -44,34 +44,36 @@ def delete_car(reg):
 
 #CHATGPT
 
-def create_customer(name, age, address):
-    with _get_connection().session() as session:
-        session.run("CREATE (:Customer {name: $name, age: $age, address: $address})", name=name, age=age, address=address)
+# CRUD for Cars
+@app.route('/create_car', methods=['POST'])
+def create_car():
+    data = request.json
+    make = data["make"]
+    model = data["model"]
+    year = data["year"]
+    location = data["location"]
+    status = "available"
+    save_car(make, model, year, location, status, car_id)
+    return jsonify({"message": "Car created successfully!"})
 
-def get_customers():
-    with _get_connection().session() as session:
-        return [node_to_json(record["a"]) for record in session.run("MATCH (a:Customer) RETURN a")]
+#CRUD for customer
+@app.route('/create_customer', methods=['POST'])
+def create_customer():
+    data = request.json
+    name = data["name"]
+    age = data["age"]
+    address = data["address"]
+    customer_id = str(uuid.uuid4())  # Generate a unique ID
+    save_customer(name, age, address, customer_id)
+    return jsonify({"message": "Customer created successfully!"})
 
-def update_customer(customer_id, name, age, address):
-    with _get_connection().session() as session:
-        session.run("MATCH (a:Customer) WHERE id(a) = $id SET a.name = $name, a.age = $age, a.address = $address", id=customer_id, name=name, age=age, address=address)
-
-def delete_customer(customer_id):
-    with _get_connection().session() as session:
-        session.run("MATCH (a:Customer) WHERE id(a) = $id DELETE a", id=customer_id)
-
-def create_employee(name, address, branch):
-    with _get_connection().session() as session:
-        session.run("CREATE (:Employee {name: $name, address: $address, branch: $branch})", name=name, address=address, branch=branch)
-
-def get_employees():
-    with _get_connection().session() as session:
-        return [node_to_json(record["a"]) for record in session.run("MATCH (a:Employee) RETURN a")]
-
-def update_employee(employee_id, name, address, branch):
-    with _get_connection().session() as session:
-        session.run("MATCH (a:Employee) WHERE id(a) = $id SET a.name = $name, a.address = $address, a.branch = $branch", id=employee_id, name=name, address=address, branch=branch)
-
-def delete_employee(employee_id):
-    with _get_connection().session() as session:
-        session.run("MATCH (a:Employee) WHERE id(a) = $id DELETE a", id=employee_id)
+#CRUD for employee
+@app.route('/create_employee', methods=['POST'])
+def create_employee():
+    data = request.json
+    name = data["name"]
+    address = data["address"]
+    branch = data["branch"]
+    employee_id = str(uuid.uuid4())  # Generate a unique ID
+    save_employee(name, address, branch, employee_id)
+    return jsonify({"message": "Employee created successfully!"})
