@@ -32,7 +32,7 @@ def findCarByReg(reg):
  
 #1. CRUD for "Cars" class  
 #We have added status to the function
-def save_car(make, model, reg, year, capacity):
+def save_car(make, model, reg, year, capacity,location,status):
   cars = _get_connection().execute_query(
           "MERGE (a:Car{make: $make, model: $model, reg: $reg, year: $year, capacity: $capacity, location: $location, status: $status}) RETURN a;",
           make=make, model=model, reg=reg, year=year, capacity=capacity, location=location, status=status)
@@ -43,7 +43,6 @@ def save_car(make, model, reg, year, capacity):
 def delete_car(reg):
   _get_connection().execute_query("MATCH (a:Car{reg: $reg}) delete a;", reg = reg)
 
-#
 def update_car(make, model, reg, year, capacity, location, status):
   with _get_connection().session() as session:
       car = session.run(
