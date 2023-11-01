@@ -19,35 +19,35 @@ def find_car_by_reg_number():
 
 
 
-@app.route('/save_car', methods=["POST"]) 
-def save_car_info():
-    make = request.form["make"]
-    model = request.form["model"]
-    reg = request.form["reg"]
-    year = request.form["year"]
-    capacity = request.form["capacity"]
-    return save_car(make, model, reg, year, capacity)
+# @app.route('/save_car', methods=["POST"]) 
+# def save_car_info():
+#     make = request.form["make"]
+#     model = request.form["model"]
+#     reg = request.form["reg"]
+#     year = request.form["year"]
+#     capacity = request.form["capacity"]
+#     return save_car(make, model, reg, year, capacity)
 
 
 
-  # The method uses the registration number to find the car
-# object from database and updates other informaiton from
-# the information provided as input in the json object
-@app.route('/update_car', methods=['PUT']) 
-def update_car_info():
-    record = json.loads(request.data)
-    print(record)
-    return update_car(record['make'], record['model'], 
-    record['reg'], record['year'], record['capacity'])
+#   # The method uses the registration number to find the car
+# # object from database and updates other informaiton from
+# # the information provided as input in the json object
+# @app.route('/update_car', methods=['PUT']) 
+# def update_car_info():
+#     record = json.loads(request.data)
+#     print(record)
+#     return update_car(record['make'], record['model'], 
+#     record['reg'], record['year'], record['capacity'])
 
-  # The method uses the registration number to find the car
-  # object from database and removes the records
-@app.route('/delete_car', methods=['DELETE'])
-def delete_car_info():
-    record = json.loads(request.data)
-    print(record)
-    delete_car(record['reg'])
-    return findAllCars()
+#   # The method uses the registration number to find the car
+#   # object from database and removes the records
+# @app.route('/delete_car', methods=['DELETE'])
+# def delete_car_info():
+#     record = json.loads(request.data)
+#     print(record)
+#     delete_car(record['reg'])
+#     return findAllCars()
 
 
 # 1, 
