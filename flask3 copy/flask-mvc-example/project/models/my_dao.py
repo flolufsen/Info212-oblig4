@@ -29,15 +29,14 @@ def findCarByReg(reg):
      return nodes_json
 
 
-#CHAT GPT
  
 #1. CRUD for "Cars" class  
 #We have added status to the function
 def save_car(make, model, reg, year, capacity):
   cars = _get_connection().execute_query(
           "MERGE (a:Car{make: $make, model: $model, reg: $reg, year: $year, capacity: $capacity, location: $location, status: $status}) RETURN a;",
-          make=make, model=model, reg=reg, year=year, capacity=capacity, location=location, status=status
-      )
+          make=make, model=model, reg=reg, year=year, capacity=capacity, location=location, status=status)
+      
   nodes_json = [node_to_json(record["a"]) for record in cars]
   return nodes_json
 

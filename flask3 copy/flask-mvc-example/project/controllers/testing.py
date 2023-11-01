@@ -50,7 +50,6 @@ def delete_car_info():
     return findAllCars()
 
 
-#CHAT GPT
 # 1, 
 @app.route('/save_car', methods=["POST"]) 
 def save_car_info():
