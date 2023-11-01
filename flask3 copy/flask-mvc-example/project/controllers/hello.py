@@ -1,6 +1,6 @@
 from project import app
 from flask import render_template, request, redirect, url_for
-from project.models.User import findUserByUsername
+from project.models.User import findUserByName
 
 #route index
 @app.route('/', methods=["GET", "POST"])
@@ -9,7 +9,7 @@ def index():
     if request.method == "POST":
         username = request.form["username"]
         try:
-            user = findUserByUsername(username)
+            user = findUserByName(username)
             data = {
                 "username": user.username,
                 "email": user.email
